@@ -1,0 +1,22 @@
+{%extends 'all-posts/base.html'%} {% block content %} {% block scripts %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block body %} {{block.super}}
+
+<div class="container">
+
+  <div class="row">
+    {% if users%}
+    <h2>Found {{ users|length }} of searched term {{message}}</h2> {% else %}
+    <h2> Found 0 User for the search term {{message}}</h2> {% endif %}
+
+  </div>
+
+  <div class="row">
+
+    {% if users %} {% for user in users %}
+    <div class="col-sm-6 col-md-3">
+      <a href="{% url 'user' user.id%}"><h1>{{user.title}}</h1></a>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+{% endblock %}
