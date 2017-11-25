@@ -47,3 +47,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Like(models.Model):
+    post = models.ForeignKey('Post')
+    user = models.ForeignKey(User)
+
+    class Meta:
+        unique_together = ("post", "user")
+
+    def __str__(self):
+        return 'Like: ' + self.user.username + ' ' + self.post.title

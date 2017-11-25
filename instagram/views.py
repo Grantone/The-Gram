@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
@@ -49,3 +50,56 @@ def profile(request, username):
         'profile': profile
     }
     return render(request, 'all-posts/profile.html', context)
+
+
+@login_required
+def inbox(request):
+    user = request.user
+
+    return render(request, 'all-posts/inbox.html', context)
+
+
+def login_user(request):
+    form = AuthenticationForm()
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+
+    return render(request, 'registration/login.html', {
+        'form': form
+    })
+
+
+def signout(request):
+    logout(request)
+    return redirect('index')
+
+
+def followers(request, username):
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+    profiles = profile.followers.all
+
+    context = {
+        'header': 'Followers',
+        'profiles': profiles,
+    }
+
+    return render(request, 'all-posts/follow_list.html', context)
+
+
+def following(request, username):
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+    profiles = profile.following.all
+
+    context = {
+        'header': 'Following',
+        'profiles': profiles
+    }
+    return render(request, 'all-posts/follow_list.html', context)
