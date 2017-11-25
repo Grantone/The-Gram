@@ -12,8 +12,8 @@ def index(request):
     if not request.user.is_authenticated():
         redirect('login')
 
-    users_followed = request.user.userprofile.following.all()
-    posts = IGPost.objects.filter(
+    users_followed = request.user.profile.following.all()
+    posts = Post.objects.filter(
         user_profile__in=users_followed).order_by('-posted_on')
 
     return render(request, 'all-posts/index.html', {
@@ -42,7 +42,7 @@ def profile(request, username):
     if not user:
         return redirect('index')
 
-    profile = UserProfile.objects.get(user=user)
+    profile = Profile.objects.get(user=user)
     context = {
         'username': username,
         'user': user,
