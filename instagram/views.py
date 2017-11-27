@@ -40,8 +40,10 @@ def post(request, pk):
     return render(request, 'all-posts/post.html', content)
 
 
-def profile(request, username):
-    user = User.objects.get(username=username)
+@login_required
+def profile(request):
+    # user = User.objects.get(username=username)
+    user = request.user
     if not user:
         return redirect('index')
 
