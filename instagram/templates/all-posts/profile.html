@@ -9,7 +9,7 @@
       </div>
       <div class="col-xs-8 right">
         <div class="name-buttons">
-          <h1 class="username">{{ user.username }}</h1> {% if request.user == user %}
+          <h1 class="username">{{ user.profile }}</h1> {% if request.user == user %}
           <a class="edit-desktop" href="{% url 'profile_settings' user.username %}">
               <button class="edit-profile">Edit Profile</button>
             </a>
