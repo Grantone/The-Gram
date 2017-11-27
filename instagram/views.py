@@ -13,7 +13,7 @@ def index(request):
     if not request.user.is_authenticated():
         redirect('login')
 
-    users_followed = request.user.profile.following.all()
+    # users_followed = request.user.profile.following.all()
     posts = Post.objects.filter(
         user_profile__in=users_followed).order_by('-posted_on')
 
@@ -35,7 +35,7 @@ def post(request, pk):
         'post': post,
         'liked': liked
     }
-    return render(request, 'all-posts/post.html', context)
+    return render(request, 'all-posts/post.html', content)
 
 
 def profile(request, username):
@@ -44,7 +44,7 @@ def profile(request, username):
         return redirect('index')
 
     profile = Profile.objects.get(user=user)
-    context = {
+    content = {
         'username': username,
         'user': user,
         'profile': profile
@@ -56,7 +56,7 @@ def profile(request, username):
 def inbox(request):
     user = request.user
 
-    return render(request, 'all-posts/inbox.html', context)
+    return render(request, 'all-posts/inbox.html', content)
 
 
 def login_user(request):
@@ -90,7 +90,7 @@ def followers(request, username):
         'profiles': profiles,
     }
 
-    return render(request, 'all-posts/follow_list.html', context)
+    return render(request, 'all-posts/follow_list.html', content)
 
 
 def following(request, username):
@@ -102,4 +102,4 @@ def following(request, username):
         'header': 'Following',
         'profiles': profiles
     }
-    return render(request, 'all-posts/follow_list.html', context)
+    return render(request, 'all-posts/follow_list.html', content)
