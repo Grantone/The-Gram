@@ -40,26 +40,24 @@ def post(request, pk):
     return render(request, 'all-posts/post.html', content)
 
 
-@login_required
-def profile(request):
-    # user = User.objects.get(username=username)
-    user = request.user
-    if not user:
-        return redirect('index')
+# @login_required
+# def profile(request):
+#     # user = User.objects.get(username=username)
+#     user = request.user
+#     if not user:
+#         return redirect('index')
+#
+#     profile = Profile.objects.get(user=user)
+#     content = {
+#         'username': username,
+#         'user': user,
+#         'profile': profile
+#     }
+#     return render(request, 'all-posts/profile.html', context)
 
-    profile = Profile.objects.get(user=user)
-    content = {
-        'username': username,
-        'user': user,
-        'profile': profile
-    }
-    return render(request, 'all-posts/profile.html', context)
 
-
-@login_required
+@login_required(login_url='/accounts/login/')
 def inbox(request):
-    user = request.user
-
     return render(request, 'all-posts/inbox.html', content)
 
 
@@ -107,3 +105,9 @@ def following(request, username):
         'profiles': profiles
     }
     return render(request, 'all-posts/follow_list.html', content)
+
+
+@login_required
+def profile(request):
+    post = Posts.display_post()
+    return render(request, 'all-posts/profile.html', {"post": post})
