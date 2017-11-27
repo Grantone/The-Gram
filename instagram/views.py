@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from .models import Post, Profile
 
 # Create your views here.
 
@@ -22,6 +23,7 @@ def index(request):
     })
 
 
+@login_required(login_url='/accounts/login/')
 def post(request, pk):
     post = Post.objects.get(pk=pk)
     try:
