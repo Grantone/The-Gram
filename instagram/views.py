@@ -14,8 +14,8 @@ def index(request):
         redirect('login')
 
     # users_followed = request.user.profile.following.all()
-    posts = Post.objects.filter(
-        user_profile__in=users_followed).order_by('-posted_on')
+    post = Post.objects.get(
+        profile__in=users_followed).order_by('-posted_on')
 
     return render(request, 'all-posts/index.html', {
         'posts': posts

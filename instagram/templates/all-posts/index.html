@@ -1,17 +1,17 @@
 {%extends 'all-posts/base.html'%}{% load static %} {% block styles %} {{block.super}} {% endblock %} {% block content %} {{block.super}} {% endblock %} {% block content %}
-<div class="cards-listing">
+<div class="index">
   {% for post in posts %}
   <div class="row">
     <div class="card view-update {{ post.pk }}">
       <div class="card__panel-head">
         <div class="poster__info">
-          <a href="{% url 'profile' post.user_profile.user.username %}" class="poster__name">
-                              {% if post.user_profile.profile_pic %}
-                                <img class="poster__profilepic" src="{{ post.user_profile.profile_pic.url }}">
+          <a href="{% url 'profile' post.profile.user.username %}" class="poster__name">
+                              {% if post.profile.profile_pic %}
+                                <img class="poster__profilepic" src="{{ post.profile.profile_pic.url }}">
                               {% else %}
                                 <img class="poster__profilepic" src="{% static 'images/profile_placeholder.jpg' %}">
                               {% endif %}
-                              {{ post.user_profile.user.username }}
+                              {{ post.profile.user.username }}
                             </a>
           <span class="poster__timestamp">
                                 {{ post.posted_on|timesince }}
@@ -27,8 +27,8 @@
         </a>
         <ul class="comment-list">
           <li class="comment-list__comment">
-            <a class="user" href="{% url 'profile' post.user_profile.user.username %}">
-                              {{ post.user_profile.user.username }}
+            <a class="user" href="{% url 'profile' post.profile.user.username %}">
+                              {{ post.profile.user.username }}
                             </a>
             <span class="comment">{{ post.title | parse_hashtags | safe }}</span>
           </li>
