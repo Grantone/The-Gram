@@ -1,60 +1,36 @@
-{%extends 'all-posts/base.html'%}{% load static %} {% block styles %} {{block.super}} {% endblock %} {% block content %} {{block.super}} {% endblock %} {% block content %}
-<div class="index">
-  {% for post in posts %}
+{% extends 'all-posts/base.html' %} {% load bootstrap3 %} {% load static %} {% block styles %} {{block.super}}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %} {% block content %}
+<div class="container">
   <div class="row">
-    <div class="card view-update {{ post.pk }}">
-      <div class="card__panel-head">
-        <div class="poster__info">
-          <a href="{% url 'profile' post.profile.user.username %}" class="poster__name">
-                              {% if post.profile.profile_pic %}
-                                <img class="poster__profilepic" src="{{ post.profile.profile_pic.url }}">
-                              {% else %}
-                                <img class="poster__profilepic" src="{% static 'images/profile_placeholder.jpg' %}">
-                              {% endif %}
-                              {{ post.profile.user.username }}
-                            </a>
-          <span class="poster__timestamp">
-                                {{ post.posted_on|timesince }}
-                            </span>
+    <!-- Empty div -->
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+      <div class="col-md-7">
+
+        {% for post in posts %}
+
+        <div class="card">
+          <div class="container">
+            <p>{{post.title}}</p>
+          </div>
+          <img src="{{post.picture.url}}" class="img-responsive" alt="Image">
+          <div class="container">
+            <p>{{post.picture_url}}</p>
+          </div>
         </div>
+        {% empty %}
+        <p>No posts yet</p>
+        {% endfor %}
       </div>
-      <img class="card__main-image" src="{{ post.image.url }}">
-      <div class="card__panel-body">
-        <a href="{% url 'likes' post.pk %}">
-          <div class="likes">
-            {% if post.get_number_of_likes %} {{ post.get_number_of_likes }} like{% if post.get_number_of_likes > 1 %}s{% endif %} {% endif %}
-          </div>
-        </a>
-        <ul class="comment-list">
-          <li class="comment-list__comment">
-            <a class="user" href="{% url 'profile' post.profile.user.username %}">
-                              {{ post.profile.user.username }}
-                            </a>
-            <span class="comment">{{ post.title | parse_hashtags | safe }}</span>
-          </li>
-          <a class="view-more"></a> {% for comment in post.comment_set.all %}
-          <li class="comment-list__comment">
-            <a href="{% url 'profile' comment.user.username %}" class="user">
-                                {{ comment.user.username }}
-                              </a>
-            <span class="comment">{{ comment.comment }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-        {% if request.user.is_authenticated %}
-        <section class="input-row">
-          <i class="fa {% has_user_liked_post post request.user %} submit-like" aria-hidden="true"></i>
-          <div class="comment-input-wrapper">
-            <input class="add-comment" type="text" placeholder="Add a comment...">
-          </div>
-          <div class="hidden-data {{ post.pk }}" style="display: none;">
-            <span class="post-pk">{{ post.pk }}</span>
-          </div>
-        </section>
-        {% endif %}
+      <div class="col-md-3">
+        <p>
+          {{request.user}}</p>
+        <p>{{request.image}}<br></p>
+        <hr>
       </div>
     </div>
+
+    <!-- empty div -->
   </div>
-  {% endfor %}
 </div>
 {% endblock %}

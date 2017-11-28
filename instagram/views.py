@@ -9,15 +9,9 @@ from .models import Post, Profile
 # Create your views here.
 
 
+@login_required(login_url='/accounts/login/')
 def index(request):
-    # return render(request, 'all-posts/index.html')
-    if not request.user.is_authenticated():
-        redirect('login')
-
-    # users_followed = request.user.profile.following.all()
-    post = Post.objects.get(
-        profile__in=users_followed).order_by('-posted_on')
-
+    posts = Post.objects.all()
     return render(request, 'all-posts/index.html', {
         'posts': posts
     })
@@ -25,7 +19,7 @@ def index(request):
 
 @login_required(login_url='/accounts/login/')
 def post(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = Post.objects.get(pk=post_id)
     try:
         like = Like.objects.get(post=post, user=request.user)
         liked = 1
@@ -111,3 +105,40 @@ def following(request, username):
 def profile(request):
     post = Posts.display_post()
     return render(request, 'all-posts/profile.html', {"post": post})
+
+
+@login_required(login_url='/accounts/login/')
+def update_user_profile(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        user_profile = UserProfileForm(
+            request.POST, instance=request.user.profile)
+
+        if user_form.is_valid() and user_profile.is_valid():
+            user_form.save()
+            user_profile.save()
+            messages.success(request, 'Profile successfully updated')
+            return redirect(index)
+        else:
+            messages.error(
+                request, 'A slight error please correct,,, can you try again')
+
+    else:
+        user_form = UserForm(instance=request.user)
+        user_profile = UserProfileForm(instance=request.user.profile)
+
+    return render(request, 'profiles/profile.html', {'user_form': user_form, 'user_profile': user_profile, })
+
+
+def new_post(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewPostForm(request.POST, request.FILES)
+        if current_user.is_authenticated and form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+            return redirect(index)
+    else:
+        form = NewPostForm()
+    return render(request, 'posts/new-post.html', {"form": form})
