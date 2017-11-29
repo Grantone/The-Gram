@@ -1,0 +1,15 @@
+{% extends 'all-posts/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block content %} {{block.super}}
+<div class="col-md-4">
+  hggfjhgjhgf
+  <a href="/profiles"><h2 class="btn text-center">{{user.username}}</h2></a>
+  <hr>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      {{ user_form.as_p }} {{ user_profile.as_p }}
+    </div>
+    <button type="submit" class='btn btn-primary'>Save changes</button>
+  </form>
+</div>
+{% endblock %}

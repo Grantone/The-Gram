@@ -1,25 +1,11 @@
-{% extends 'base.html' %} {% load bootstrap3 %} {% load static %} {% block styles %}
-<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block body %} {{block.super}} {% include 'navbar.html' %} {% block content %}
+{% extends 'all-posts/base.html' %} {% load bootstrap3 %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block content %} {{block.super}}
 <div class="container">
   <div class="row">
     <!-- Empty div -->
     <div class="col-md-4"></div>
     <div class="col-md-4">
-      <form action='/profiles/edit/' method="post">
-        {% csrf_token %} {% bootstrap_form user_form %}
-        <hr>
-        <h3>Additional Information
-          </h3>
-        <hr> {% bootstrap_form user_profile %}
-
-        <div class="form-group">
-          <button type="submit">Edit Profile</button>
-        </div>
-
-        <input type="hidden" name="next" value="{{next}}">
-
-      </form>
-      {{user.userprofile.username}}
+      hgfhgfhgf {{user.profile.username}}
     </div>
     <!-- empty div -->
     <div class="col-md-4"></div>

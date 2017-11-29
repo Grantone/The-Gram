@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Post, Profile
+from .forms import UserProfileForm, NewPostForm
 
 # Create your views here.
 
@@ -103,7 +104,7 @@ def following(request, username):
 
 @login_required
 def profile(request):
-    post = Posts.display_post()
+    post = Post.objects.all()
     return render(request, 'all-posts/profile.html', {"post": post})
 
 
@@ -119,15 +120,15 @@ def update_user_profile(request):
             user_profile.save()
             messages.success(request, 'Profile successfully updated')
             return redirect(index)
-        else:
-            messages.error(
-                request, 'A slight error please correct,,, can you try again')
+        # else:
+        #     messages.error(
+        #         follower request, 'A slight error please correct,,, can you try again')
 
     else:
-        user_form = UserForm(instance=request.user)
+        user_form = UserProfileForm(instance=request.user)
         user_profile = UserProfileForm(instance=request.user.profile)
 
-    return render(request, 'profiles/profile.html', {'user_form': user_form, 'user_profile': user_profile, })
+    return render(request, 'all-posts/edit_profile.html', {'user_form': user_form, 'user_profile': user_profile, })
 
 
 def new_post(request):

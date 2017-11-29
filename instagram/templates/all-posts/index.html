@@ -1,5 +1,5 @@
 {% extends 'all-posts/base.html' %} {% load bootstrap3 %} {% load static %} {% block styles %} {{block.super}}
-<link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block content %}
 <div class="container">
   <div class="row">
     <!-- Empty div -->
@@ -13,7 +13,7 @@
           <div class="container">
             <p>{{post.title}}</p>
           </div>
-          <img src="{{post.post_image.url}}" class="img-responsive" alt="Image">
+          <img src="{{post.post_image.url}}" class="img-responsive" alt="Image" id="space">
           <div class="container">
             <p>{{post.picture_url}}</p>
           </div>
@@ -23,8 +23,7 @@
         {% endfor %}
       </div>
       <div class="col-md-3">
-        <p>
-          {{request.user}}</p>
+        <p><a href="profile">{{request.user}}</a></p>
         <p>{{request.image}}<br></p>
         <hr>
       </div>

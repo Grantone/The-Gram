@@ -1,4 +1,6 @@
 from django import forms
+from .models import Profile, Post
+from django.contrib.auth.models import User
 
 
 class InstagramLetterForm(forms.Form):
@@ -9,7 +11,7 @@ class InstagramLetterForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('posts', 'gender')
+        fields = ('profile_pic', 'description', 'following', 'followers')
 
 
 class NewPostForm(forms.ModelForm):

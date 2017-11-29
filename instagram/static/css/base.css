@@ -5,3 +5,11 @@ h1 {
 .navbar {
    background-color: #FFEBCD !important;
 }
+
+#space {
+  margin: 10px;
+  height: 350px;
+  width: 350px;
+  object-fit: cover;
+
+}
