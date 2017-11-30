@@ -14,6 +14,11 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <p>{{post.title}}</p>
+                  <li>{{follower|length}} followers</li>
+                  <li>{{following|length}} following</li>
+                  <a href="#">
+                    <li><span class="glyphicon glyphicon-ok"></span>
+                  </a>Likes</li>
                 </div>
                 <div class="panel-body">
                   <img src="{{post.post_image.url}}" class="img-responsive" alt="Image" id="space">
