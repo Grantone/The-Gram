@@ -143,3 +143,22 @@ def new_post(request):
     else:
         form = NewPostForm()
     return render(request, 'posts/new-post.html', {"form": form})
+
+
+@login_required
+def add_like(request):
+    post_pk = request.POST.get('post_pk')
+    post = Post.objects.get(pk=post_pk)
+    try:
+        like = Like(post=post, user=request.user)
+        like.save()
+        result = 1
+    except Exception as e:
+        like = Like.objects.get(post=post, user=request.user)
+        like.delete()
+        result = 0
+
+    return {
+        'result': result,
+        'post_pk': post_pk
+    }

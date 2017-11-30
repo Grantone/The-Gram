@@ -6,30 +6,39 @@
     <div class="col-md-2"></div>
     <div class="col-md-10">
       <div class="col-md-7">
-
-        {% for post in posts %}
+        <i class="fa fa-instagram" aria-hidden="true"></i> {% for post in posts %}
 
         <div class="card">
           <div class="container">
-            <p>{{post.title}}</p>
-          </div>
-          <img src="{{post.post_image.url}}" class="img-responsive" alt="Image" id="space">
-          <div class="container">
-            <p>{{post.picture_url}}</p>
-          </div>
-        </div>
-        {% empty %}
-        <p>No posts yet</p>
-        {% endfor %}
-      </div>
-      <div class="col-md-3">
-        <p><a href="profile">{{request.user}}</a></p>
-        <p>{{request.image}}<br></p>
-        <hr>
-      </div>
-    </div>
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <p>{{post.title}}</p>
+                </div>
+                <div class="panel-body">
+                  <img src="{{post.post_image.url}}" class="img-responsive" alt="Image" id="space">
+                </div>
+              </div>
 
-    <!-- empty div -->
+            </div>
+
+            <div class="container">
+              <p>{{post.picture_url}}</p>
+            </div>
+          </div>
+          {% empty %}
+          <p>No posts yet</p>
+          {% endfor %}
+        </div>
+        <div class="col-md-3">
+          <p><a href="profile">{{request.user}}</a></p>
+          <p>{{request.image}}<br></p>
+          <hr>
+
+        </div>
+      </div>
+
+      <!-- empty div -->
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
