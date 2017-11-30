@@ -35,22 +35,6 @@ def post(request, pk):
     return render(request, 'all-posts/post.html', content)
 
 
-# @login_required
-# def profile(request):
-#     # user = User.objects.get(username=username)
-#     user = request.user
-#     if not user:
-#         return redirect('index')
-#
-#     profile = Profile.objects.get(user=user)
-#     content = {
-#         'username': username,
-#         'user': user,
-#         'profile': profile
-#     }
-#     return render(request, 'all-posts/profile.html', context)
-
-
 @login_required(login_url='/accounts/login/')
 def inbox(request):
     return render(request, 'all-posts/inbox.html', content)

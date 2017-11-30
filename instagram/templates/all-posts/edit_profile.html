@@ -1,7 +1,7 @@
 {% extends 'all-posts/base.html' %} {% load static %} {% block styles %}
 <link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block content %} {{block.super}}
 <div class="col-md-4">
-  hggfjhgjhgf
+  <img src="{{profile.profile_pic.url}}" class="img-responsive" alt="Image" id="space">
   <a href="/profiles"><h2 class="btn text-center">{{user.username}}</h2></a>
   <hr>
   <form method="post" enctype="multipart/form-data">
