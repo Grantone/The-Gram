@@ -1,48 +1,11 @@
-{% extends 'all-posts/base.html' %} {% load bootstrap3 %} {% load static %} {% block styles %} {{block.super}}
-<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %} {% block content %}
-<div class="container">
-  <div class="row">
-    <!-- Empty div -->
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
-      <div class="col-md-7">
-        <i class="fa fa-instagram" aria-hidden="true"></i> {% for post in posts %}
-
-        <div class="card">
-          <div class="container">
-            <div class="panel-group">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <p>{{post.title}}</p>
-                  <li>{{follower|length}} followers</li>
-                  <li>{{following|length}} following</li>
-                  <a href="#">
-                    <li><span class="glyphicon glyphicon-heart"></span>
-                  </a>Likes</li>
-                </div>
-                <div class="panel-body">
-                  <img src="{{post.post_image.url}}" class="img-responsive" alt="Image" id="space">
-                </div>
-                <div class="panel-footer">
-                  <input type="text" class="form-control" placeholder="Leave a Comment..." aria-describedby="comment">
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="container">
-            <p>{{post.picture_url}}</p>
-          </div>
-        </div>
-        {% empty %}
-        <p>No posts yet</p>
-        {% endfor %}
+{% extends 'base.html' %} {% block content %}
+<div class="cont">
+  <div class="container">
+    <div class="row">
+      <div class="text-center" style="text-shadow:#000 2px 2px 15px;">
+        <h1>Travel Around Nairobi Easily</h1>
       </div>
-
     </div>
-
-    <!-- empty div -->
   </div>
 </div>
 {% endblock %}
