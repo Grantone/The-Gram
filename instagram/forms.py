@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Post
+from .models import Profile, Post, Review
 from django.contrib.auth.models import User
 
 
@@ -18,3 +18,9 @@ class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ['user']
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('photos', 'comment')

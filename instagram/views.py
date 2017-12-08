@@ -5,8 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Post, Profile
-from .forms import UserProfileForm, NewPostForm
+from .forms import UserProfileForm, NewPostForm, ReviewForm
+from vote.managers import VotableManager
 
+
+votes = VotableManager()
 # Create your views here.
 
 
@@ -146,3 +149,34 @@ def add_like(request):
         'result': result,
         'post_pk': post_pk
     }
+
+
+@login_required(login_url='/accounts/login')
+def upvote_post(request, pk):
+    post = Post.get_single_post(pk)
+    user = request.user
+    user_id = user.id
+
+    if user.is_authenticated:
+        upvote = Post.upvote_count(user_id)
+        print(upvote)
+        post.upvote_count = post.votes.count()
+        post.save()
+    return redirect(index)
+    # return render(request, "profiles/post.html", {"post": post, "upvote": upvote})
+
+
+@login_required(login_url='/accounts/login')
+def downvote_post(request, pk):
+    post = Post.get_single_post(pk)
+    user = request.user
+    user_id = user.id
+
+    if user.is_authenticated:
+        downvote = post.votes.down(user_id)
+        print(post.id)
+        print(downvote)
+        print(post.vote_score)
+        post.downvote_count = post.votes.count()
+        post.save()
+    return redirect(index)

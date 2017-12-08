@@ -5,7 +5,16 @@ from imagekit.models import ProcessedImageField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+from django.db.models.signals import post_save
+from django.db.models import Q, signals
+from django.dispatch import receiver
+from tinymce.models import HTMLField
+from vote.models import VoteModel
+from vote.managers import VotableManager
 
+
+# UP = 0
+# DOWN = 1
 # Create your models here.
 
 
@@ -49,6 +58,8 @@ class Post(models.Model):
     user = models.ForeignKey(User)
     post_image = models.ImageField(upload_to='posts/', null=True, blank=True)
     title = models.CharField(max_length=60)
+    upvote_count = models.PositiveIntegerField(default=0)
+    downvote_count = models.PositiveIntegerField(default=0)
 
     def get_number_of_likes(self):
         return self.like_set.count()
@@ -62,3 +73,29 @@ class Post(models.Model):
     @classmethod
     def get_posts(cls):
         posts = cls.objects.all()
+
+    @classmethod
+    def display_posts(cls):
+        posts = cls.objects.all()
+        return posts
+
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+
+    @classmethod
+    def get_single_post(cls, pk):
+        post = cls.objects.get(pk=pk)
+
+        return post
+
+
+class Review(models.Model):
+    users = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="vote")
+    photos = models.ForeignKey(Post, related_name="vote")
+    comment = models.CharField(max_length=140, blank=True)
+
+    def save_review(self):
+        self.save()
